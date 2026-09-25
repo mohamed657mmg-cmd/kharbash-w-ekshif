@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>خربش واكشف</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #263238, #0b0f12 65%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    /* الشعار */
+    .logo {
+      text-align: center;
+      margin-top: 25px;
+      margin-bottom: 35px;
+    }
+
+    .logo-icon {
+      width: 95px;
+      height: 95px;
+      margin: auto;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #ffca28, #ff6f00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      box-shadow: 0 10px 35px rgba(255, 152, 0, .35);
+      transform: rotate(-5deg);
+    }
+
+    .logo h1 {
+      margin-top: 20px;
+      font-size: 38px;
+      font-weight: 900;
+    }
+
+    .logo p {
+      color: #b0bec5;
+      margin-top: 8px;
+      font-size: 15px;
+    }
+
+    /* زر ابدأ */
+    .start-btn {
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      padding: 19px;
+      background: linear-gradient(135deg, #ffca28, #ff6f00);
+      color: #151515;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(255, 111, 0, .3);
+      transition: .2s;
+    }
+
+    .start-btn:active {
+      transform: scale(.96);
+    }
+
+    /* الأقسام */
+    .title {
+      margin: 35px 0 15px;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .category {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px;
+      padding: 18px 10px;
+      background: rgba(255,255,255,.06);
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      transition: .2s;
+    }
+
+    .category:active {
+      transform: scale(.95);
+      background: rgba(255,202,40,.15);
+    }
+
+    .category .emoji {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .category span:last-child {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* شاشة اللعب */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .back {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 18px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .game-card {
+      margin-top: 25px;
+      padding: 35px 20px;
+      border-radius: 25px;
+      background: linear-gradient(145deg, #37474f, #182126);
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,.4);
+    }
+
+    .game-card .card-icon {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .game-card h2 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .game-card p {
+      color: #cfd8dc;
+      line-height: 1.7;
+    }
+
+    .players {
+      margin-top: 25px;
+    }
+
+    .player-input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 14px;
+      border: 1px solid #455a64;
+      background: #182126;
+      color: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .add-player {
+      width: 100%;
+      padding: 14px;
+      border: 1px dashed #78909c;
+      background: transparent;
+      color: #cfd8dc;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    .continue-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 17px;
+      border: none;
+      border-radius: 17px;
+      background: #ffca28;
+      color: #111;
+      font-size: 19px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .footer {
+      text-align: center;
+      color: #607d8b;
+      margin-top: 35px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- الصفحة الرئيسية -->
+  <div class="container screen active" id="home">
+
+    <div class="logo">
+      <div class="logo-icon">🖍️</div>
+
+      <h1>خربش واكشف</h1>
+
+      <p>
+        لعبة الأصحاب... خربش، اكشف، وشوف مين الكذاب! 😈
+      </p>
+    </div>
+
+    <button class="start-btn" onclick="startGame()">
+      🎮 ابدأ اللعب
+    </button>
+
+    <div class="title">
+      🎯 اختر القسم
+    </div>
+
+    <div class="categories">
+
+      <div class="category" onclick="selectCategory('صراحة')">
+        <span class="emoji">😈</span>
+        <span>صراحة</span>
+      </div>
+
+      <div class="category" onclick="selectCategory('كرة القدم')">
+        <span class="emoji">⚽</span>
+        <span>كرة القدم</span>
+      </div>
+
+      <div class="category" onclick="selectCategory('أفلام ومسلسلات')">
+        <span class="emoji">🎬</span>
+        <span>أفلام ومسلسلات</span>
+      </div>
+
+      <div class="category" onclick="selectCategory('ملابس')">
+        <span class="emoji">👕</span>
+        <span>ملابس</span>
+      </div>
+
+      <div class="category" onclick="selectCategory('ألغاز')">
+        <span class="emoji">🧠</span>
+        <span>ألغاز</span>
+      </div>
+
+      <div class="category" onclick="selectCategory('تحديات')">
+        <span class="emoji">🔥</span>
+        <span>تحديات</span>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      خربش واكشف © 2026
+    </div>
+
+  </div>
+
+
+  <!-- شاشة إضافة اللاعبين -->
+  <div class="container screen" id="playersScreen">
+
+    <button class="back" onclick="goHome()">
+      ← رجوع
+    </button>
+
+    <div class="game-card">
+
+      <div class="card-icon">👥</div>
+
+      <h2>أصحاب الجولة</h2>
+
+      <p>
+        اكتب أسماء اللاعبين اللي هيلعبوا معاك
+      </p>
+
+    </div>
+
+    <div class="players" id="players">
+
+      <input
+        class="player-input"
+        type="text"
+        placeholder="اسم اللاعب الأول"
+      >
+
+      <input
+        class="player-input"
+        type="text"
+        placeholder="اسم اللاعب الثاني"
+      >
+
+    </div>
+
+    <button class="add-player" onclick="addPlayer()">
+      ＋ إضافة لاعب
+    </button>
+
+    <button class="continue-btn" onclick="startRound()">
+      ابدأ الجولة 🚀
+    </button>
+
+  </div>
+
+
+  <!-- شاشة الجولة -->
+  <div class="container screen" id="roundScreen">
+
+    <button class="back" onclick="goHome()">
+      ← خروج
+    </button>
+
+    <div class="game-card">
+
+      <div class="card-icon">🃏</div>
+
+      <h2 id="roundTitle">
+        الجولة الأولى
+      </h2>
+
+      <p id="roundText">
+        كل لاعب هيمسك الموبايل لوحده ويكشف الكارت.
+      </p>
+
+    </div>
+
+    <button class="continue-btn" onclick="alert('هنا هنضيف نظام الخربشة الحقيقي 🔥')">
+      خربش واكشف 🖍️
+    </button>
+
+  </div>
+
+
+  <script>
+
+    let selectedCategory = "صراحة";
+
+    function startGame() {
+      showScreen("playersScreen");
+    }
+
+    function selectCategory(category) {
+
+      selectedCategory = category;
+
+      alert("تم اختيار قسم: " + category);
+
+      showScreen("playersScreen");
+    }
+
+    function showScreen(id) {
+
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+      });
+
+      document.getElementById(id).classList.add("active");
+
+      window.scrollTo(0, 0);
+    }
+
+    function goHome() {
+      showScreen("home");
+    }
+
+    function addPlayer() {
+
+      const players = document.getElementById("players");
+
+      const number =
+        players.querySelectorAll(".player-input").length + 1;
+
+      const input = document.createElement("input");
+
+      input.className = "player-input";
+
+      input.type = "text";
+
+      input.placeholder =
+        "اسم اللاعب " + number;
+
+      players.appendChild(input);
+    }
+
+    function startRound() {
+
+      const inputs =
+        document.querySelectorAll(".player-input");
+
+      let names = [];
+
+      inputs.forEach(input => {
+
+        if (input.value.trim() !== "") {
+          names.push(input.value.trim());
+        }
+
+      });
+
+      if (names.length < 2) {
+
+        alert("لازم تضيف لاعبين على الأقل 👥");
+
+        return;
+      }
+
+      document.getElementById("roundTitle").textContent =
+        "قسم " + selectedCategory;
+
+      document.getElementById("roundText").textContent =
+        "جاهزين؟ كل لاعب هيمسك الموبايل ويكشف الكارت لوحده 👀";
+
+      showScreen("roundScreen");
+    }
+
+  </script>
+
+</body>
+  </html>
